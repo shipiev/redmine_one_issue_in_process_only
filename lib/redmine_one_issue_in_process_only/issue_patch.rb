@@ -21,10 +21,10 @@ module RedmineOneIssueInProcessOnly::IssuePatch
   end
 
   def in_process_status_id
-    Setting.redmine_one_issue_in_process_only[:in_process_status_id].to_i
+    Setting.plugin_redmine_one_issue_in_process_only[:in_process_status_id].to_i
   end
 
   def on_hold_status_id
-    Setting.redmine_one_issue_in_process_only[:on_hold_status_id].to_i
+    Setting.plugin_redmine_one_issue_in_process_only[:on_hold_status_id].to_i
   end
 end
