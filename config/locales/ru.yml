@@ -1,0 +1,5 @@
+ru:
+  settings:
+    redmine_one_issue_in_process_only:
+      in_process_status_id: 'Статус задачи "В процессе"'
+      on_hold_status_id: 'Статус задачи "Отложена"'
