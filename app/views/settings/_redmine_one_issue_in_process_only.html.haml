@@ -1,6 +1,0 @@
-%p
-  %label= l(:in_process_status_id, scope: 'settings.redmine_one_issue_in_process_only')
-  = select_tag('settings[in_process_status_id]', options_for_select(IssueStatus.order(:position).pluck(:name, :id), IssueStatus.find_by(id: @settings[:in_process_status_id]).try(:id)), include_blank: true)
-%p
-  %label= l(:on_hold_status_id, scope: 'settings.redmine_one_issue_in_process_only')
-  = select_tag('settings[on_hold_status_id]', options_for_select(IssueStatus.order(:position).pluck(:name, :id), IssueStatus.find_by(id: @settings[:on_hold_status_id]).try(:id)), include_blank: true)
