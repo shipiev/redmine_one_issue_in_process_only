@@ -3,9 +3,9 @@ module RedmineOneIssueInProcessOnly::IssuePatch
 
   included do
     before_save :save_current_status_id
-    after_commit :in_process_to_on_hold,
-                 if: -> { in_process_status? && @prev_status_id == in_process_status_id },
-                 unless: :isnt_parent_issue_in_process
+    after_save :in_process_to_on_hold,
+               if: -> { in_process_status? && @prev_status_id == in_process_status_id },
+               unless: :isnt_parent_issue_in_process
     validate :status_cant_be_in_process, if: :isnt_parent_issue_in_process
   end
 
