@@ -11,3 +11,6 @@ ru:
           attributes:
             status_id:
               status_cant_be_in_process: '"%{status}" не может быть установлен для родительской задачи'
+  issue:
+    messages:
+      issue_change_status: 'Задача ##{id} перешла в статус "%{status_name}"'

@@ -16,6 +16,11 @@ module RedmineOneIssueInProcessOnly::IssuePatch
         .where(assigned_to_id: User.current.id, status_id: in_process_status_id)
         .where.not(id: id)
         .each do |issue|
+          issue
+              .journals
+              .build(
+                  user_id: User.current.id,
+                  notes: l(:issue_change_status, scope: 'issue.messages', id: id, status_name: status.name))
           issue.update_attributes(status_id: on_hold_status_id)
         end
   end
