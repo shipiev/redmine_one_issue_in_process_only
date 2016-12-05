@@ -3,3 +3,11 @@ en:
     redmine_one_issue_in_process_only:
       in_process_status_id: 'issue status "In Process"'
       on_hold_status_id: 'issue status "On Hold"'
+      isnt_parent_issue_in_process: 'The issue status "In Process" can`t use for parent issues'
+  activerecord:
+    errors:
+      models:
+        issue:
+          attributes:
+            status_id:
+              status_cant_be_in_process: '"%{status}" can`t use for parent issue'
