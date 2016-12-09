@@ -2,9 +2,8 @@ module RedmineOneIssueInProcessOnly::IssuePatch
   extend ActiveSupport::Concern
 
   included do
-    before_save :save_current_status_id
     after_save :in_process_to_on_hold,
-               if: -> { in_process_status? && @prev_status_id == in_process_status_id },
+               if: -> { in_process_status? },
                unless: :isnt_parent_issue_in_process
     validate :status_cant_be_in_process, if: :isnt_parent_issue_in_process
     validates :assigned_to_id, presence: true, if: -> { in_process_status? }
@@ -24,10 +23,6 @@ module RedmineOneIssueInProcessOnly::IssuePatch
                   notes: l(:issue_change_status, scope: 'issue.messages', id: id, status_name: status.name))
           issue.update_attributes(status_id: on_hold_status_id)
         end
-  end
-
-  def save_current_status_id
-    @prev_status_id = status_id_change&.last
   end
 
   def status_cant_be_in_process
