@@ -20,4 +20,16 @@
   <label><%= l(:isnt_parent_issue_in_process, scope: 'settings.redmine_one_issue_in_process_only') %></label>
   <%= check_box_tag 'settings[isnt_parent_issue_in_process]', '1', @settings['isnt_parent_issue_in_process'] %>
 </p>
-
+<p>
+  <label><%= l(:create_time_entry, scope: 'settings.redmine_one_issue_in_process_only') %></label>
+  <%= check_box_tag 'settings[create_time_entry]', '1', @settings['create_time_entry'] %>
+</p>
+<p>
+  <label><%= l(:default_time_entry_activity, scope: 'settings.redmine_one_issue_in_process_only') %></label>
+  <%= select_tag(
+          'settings[default_time_entry_activity]',
+          options_for_select(
+              TimeEntryActivity.order(:position).pluck(:name, :id),
+              IssueStatus.find_by(id: @settings['on_hold_status_id']).try(:id)),
+          include_blank: true) %>
+</p>

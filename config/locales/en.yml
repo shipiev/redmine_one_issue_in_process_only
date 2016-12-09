@@ -13,4 +13,4 @@ en:
               status_cant_be_in_process: '"%{status}" can`t use for parent issue'
   issue:
     messages:
-      issue_change_status: 'Issue ##{id} change status to "%{status_name}"'
+      issue_change_status: 'Issue #%{id} change status to "%{status_name}"'

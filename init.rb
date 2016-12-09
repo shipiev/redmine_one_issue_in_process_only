@@ -1,7 +1,5 @@
 plugin_name = 'redmine_one_issue_in_process_only'
 
-require plugin_name
-
 Redmine::Plugin.register plugin_name.to_sym do
   name 'One Issue In Process Only'
   author 'Roman Shipiev'
