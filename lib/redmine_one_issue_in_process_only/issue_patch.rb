@@ -76,11 +76,16 @@ module RedmineOneIssueInProcessOnly::IssuePatch
   end
 
   def last_in_process
+    sql = <<-SQL
+journal_details.property = 'attr' AND (
+  (journal_details.prop_key = 'status_id' AND journal_details.value = :in_process_status_id) OR
+  (journal_details.prop_key = 'assigned_to_id' AND journal_details.value = :assigned_to_id))
+SQL
     @last_in_process ||=
         journals
             .joins(:details)
-            .where(journal_details: {property: 'attr', prop_key: 'status_id', value: in_process_status_id})
-            .order(:id)
+            .where(sql, assigned_to_id: "#{User.current.id}", in_process_status_id: in_process_status_id)
+            .order('journal_details.id')
             .last
   end
 
