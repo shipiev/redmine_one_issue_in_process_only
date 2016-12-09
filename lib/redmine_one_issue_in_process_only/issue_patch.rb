@@ -7,13 +7,14 @@ module RedmineOneIssueInProcessOnly::IssuePatch
                if: -> { in_process_status? && @prev_status_id == in_process_status_id },
                unless: :isnt_parent_issue_in_process
     validate :status_cant_be_in_process, if: :isnt_parent_issue_in_process
+    validates :assigned_to_id, presence: true, if: -> { in_process_status? }
   end
 
   private
 
   def in_process_to_on_hold
     Issue
-        .where(assigned_to_id: User.current.id, status_id: in_process_status_id)
+        .where(assigned_to_id: assigned_to_id, status_id: in_process_status_id)
         .where.not(id: id)
         .each do |issue|
           issue
