@@ -8,7 +8,14 @@ Redmine::Plugin.register plugin_name.to_sym do
   url "https://github.com/shipiev/#{plugin_name}"
   author_url 'http://roman.shipiev.pro'
 
-  settings default: {'in_process_status_id' => nil, 'on_hold_status_id' => nil, 'isnt_parent_issue_in_process' => nil},
+  settings default:
+               {
+                 'in_process_status_id' => nil,
+                 'on_hold_status_id' => nil,
+                 'isnt_parent_issue_in_process' => nil,
+                 'create_time_entry' => nil,
+                 'default_time_entry_activity_id' => TimeEntryActivity.default.try(:id)
+               },
            partial: "settings/#{plugin_name}"
 end
 

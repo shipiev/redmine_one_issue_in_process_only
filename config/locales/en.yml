@@ -4,6 +4,7 @@ en:
       in_process_status_id: 'issue status "In Process"'
       on_hold_status_id: 'issue status "On Hold"'
       isnt_parent_issue_in_process: 'The issue status "In Process" can`t use for parent issues'
+      default_time_entry_activity_id: 'Time Entry Activity by default'
   activerecord:
     errors:
       models:
@@ -14,3 +15,4 @@ en:
   issue:
     messages:
       issue_change_status: 'Issue #%{id} change status to "%{status_name}"'
+      build_time_entry: '%{user} worked from %{start_at} to %{current_at}'

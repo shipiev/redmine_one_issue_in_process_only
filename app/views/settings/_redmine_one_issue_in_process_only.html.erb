@@ -25,11 +25,11 @@
   <%= check_box_tag 'settings[create_time_entry]', '1', @settings['create_time_entry'] %>
 </p>
 <p>
-  <label><%= l(:default_time_entry_activity, scope: 'settings.redmine_one_issue_in_process_only') %></label>
+  <label><%= l(:default_time_entry_activity_id, scope: 'settings.redmine_one_issue_in_process_only') %></label>
   <%= select_tag(
-          'settings[default_time_entry_activity]',
+          'settings[default_time_entry_activity_id]',
           options_for_select(
               TimeEntryActivity.order(:position).pluck(:name, :id),
-              IssueStatus.find_by(id: @settings['on_hold_status_id']).try(:id)),
+              TimeEntryActivity.find_by(id: @settings['default_time_entry_activity_id']).try(:id)),
           include_blank: true) %>
 </p>

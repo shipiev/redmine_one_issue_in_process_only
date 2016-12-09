@@ -5,7 +5,7 @@ ru:
       on_hold_status_id: 'Статус задачи "Отложена"'
       isnt_parent_issue_in_process: 'Статус "В процессе" не доступен для родительских задач'
       create_time_entry: 'Фиксировать затраченное время'
-      default_time_entry_activity: 'Активность для фиксации затраченного времени'
+      default_time_entry_activity_id: 'Активность для фиксации затраченного времени'
   activerecord:
     errors:
       models:
@@ -16,3 +16,4 @@ ru:
   issue:
     messages:
       issue_change_status: 'Задача #%{id} перешла в статус "%{status_name}"'
+      build_time_entry: '%{user} работал с %{start_at} по %{current_at}'
