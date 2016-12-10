@@ -3,6 +3,7 @@ module RedmineOneIssueInProcessOnly::IssuePatch
 
   included do
     before_save :build_time_entry, if: -> { create_time_entry? }
+    before_save :save_status_id_change_last
     after_save :in_process_to_on_hold,
                if: -> { in_process_status? },
                unless: :isnt_parent_issue_in_process?
@@ -95,8 +96,12 @@ SQL
     end
   end
 
+  def save_status_id_change_last
+    @status_id_change_last = status_id_change.try(:last)
+  end
+  
   def in_process_status?
-    status_id == in_process_status_id
+    @status_id_change_last == in_process_status_id
   end
 
   def was_in_process_status?
