@@ -3,9 +3,9 @@ module RedmineOneIssueInProcessOnly::IssuePatch
 
   included do
     attr_accessor :skip_in_process_to_on_hold
+    before_validation :save_status_id_change_last
+    before_validation :save_assigned_to_id_change_last
     before_save :build_time_entry, if: -> { create_time_entry? }
-    before_save :save_status_id_change_last
-    before_save :save_assigned_to_id_change_last
     after_save :in_process_to_on_hold,
                if: -> { in_process_status? },
                unless: -> { isnt_parent_issue_in_process? || skip_in_process_to_on_hold }
