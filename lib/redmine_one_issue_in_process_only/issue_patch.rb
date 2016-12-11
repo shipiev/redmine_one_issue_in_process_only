@@ -2,11 +2,12 @@ module RedmineOneIssueInProcessOnly::IssuePatch
   extend ActiveSupport::Concern
 
   included do
+    attr_accessor :skip_in_process_to_on_hold
     before_save :build_time_entry, if: -> { create_time_entry? }
     before_save :save_status_id_change_last
     after_save :in_process_to_on_hold,
                if: -> { in_process_status? },
-               unless: :isnt_parent_issue_in_process?
+               unless: -> { isnt_parent_issue_in_process? || skip_in_process_to_on_hold }
     validate :status_cant_be_in_process, if: :isnt_parent_issue_in_process?
     validates :assigned_to_id, presence: true, if: -> { in_process_status? }
   end
@@ -21,8 +22,9 @@ module RedmineOneIssueInProcessOnly::IssuePatch
           init_journal(
               User.current,
               l(:issue_change_status, scope: 'issue.messages', id: id, status_name: status.name))
-
-          issue.update_attributes(status_id: on_hold_status_id)
+          issue.skip_in_process_to_on_hold = true
+          issue.status_id = on_hold_status_id
+          issue.save
         end
   end
 
