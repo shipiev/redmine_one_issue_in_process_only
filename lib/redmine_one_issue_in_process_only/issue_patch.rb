@@ -5,6 +5,7 @@ module RedmineOneIssueInProcessOnly::IssuePatch
     attr_accessor :skip_in_process_to_on_hold
     before_save :build_time_entry, if: -> { create_time_entry? }
     before_save :save_status_id_change_last
+    before_save :save_assigned_to_id_change_last
     after_save :in_process_to_on_hold,
                if: -> { in_process_status? },
                unless: -> { isnt_parent_issue_in_process? || skip_in_process_to_on_hold }
@@ -102,10 +103,19 @@ SQL
     @status_id_change_last = status_id_change.try(:last)
   end
   
+  def save_assigned_to_id_change_last
+    @assigned_to_id_change_last = assigned_to_id_change.try(:last)
+  end
+  
   def in_process_status?
-    @status_id_change_last == in_process_status_id
+    (@status_id_change_last == in_process_status_id) || 
+        (new_assigned_to? && (status_id == in_process_status_id))
   end
 
+  def new_assigned_to?
+    !!@assigned_to_id_change_last
+  end
+  
   def was_in_process_status?
     status_id_change.try(:first) == in_process_status_id
   end
