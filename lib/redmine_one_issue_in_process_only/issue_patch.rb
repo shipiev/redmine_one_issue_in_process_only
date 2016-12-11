@@ -108,10 +108,13 @@ SQL
   end
   
   def in_process_status?
-    (@status_id_change_last == in_process_status_id) || 
-        (new_assigned_to? && (status_id == in_process_status_id))
+    (@status_id_change_last == in_process_status_id) || change_assigned_to_to_in_process?
   end
 
+  def change_assigned_to_in_process?
+    new_assigned_to? && (status_id == in_process_status_id)
+  end
+  
   def new_assigned_to?
     !!@assigned_to_id_change_last
   end
@@ -138,7 +141,7 @@ SQL
 
   def create_time_entry?
     !!Setting.plugin_redmine_one_issue_in_process_only['create_time_entry'] &&
-        (was_in_process_status? || assigned_to_id_changed? && in_process_status?)
+        (was_in_process_status? || change_assigned_to_in_process?)
   end
 
 end
