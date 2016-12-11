@@ -88,7 +88,7 @@ SQL
     @last_in_process ||=
         journals
             .joins(:details)
-            .where(sql, assigned_to_id: "#{User.current.id}", in_process_status_id: in_process_status_id)
+            .where(sql, assigned_to_id: assigned_to_id, in_process_status_id: in_process_status_id)
             .order('journal_details.id')
             .last
   end
