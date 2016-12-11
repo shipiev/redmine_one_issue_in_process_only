@@ -108,7 +108,7 @@ SQL
   end
   
   def in_process_status?
-    (@status_id_change_last == in_process_status_id) || change_assigned_to_to_in_process?
+    (@status_id_change_last == in_process_status_id) || change_assigned_to_in_process?
   end
 
   def change_assigned_to_in_process?
